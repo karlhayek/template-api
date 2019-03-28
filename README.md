@@ -1,6 +1,6 @@
-# Flask API Template
+# {{cookiecutter.project_name}}
 
-Flask starter project for API's using [Cookiecutter](https://github.com/audreyr/cookiecutter).
+{{cookiecutter.project_short_description}}
 
 ## Quick Start
 
