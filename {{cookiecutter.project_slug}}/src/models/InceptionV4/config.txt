@@ -1,0 +1,5 @@
+image_classification
+float32
+299
+299
+0

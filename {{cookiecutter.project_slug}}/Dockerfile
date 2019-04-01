@@ -1,6 +1,8 @@
+# Template Dockerfile. Install more dependencies and run more commands as needed
+
 FROM ubuntu:18.04
 
-#install dependencies.
+# install dependencies.
 RUN apt-get update && apt-get install -y \
   python3 \
   python3-pip \
@@ -14,5 +16,5 @@ RUN apt-get update && apt-get install -y \
   flask_restplus
 
 
-WORKDIR /api/
+WORKDIR /src/
 CMD ["python3", "api.py"]
