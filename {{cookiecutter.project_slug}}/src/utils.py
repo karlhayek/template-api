@@ -16,7 +16,7 @@ def get_models_info():
     for model_name in os.listdir(MODELS_PATH):
         config_path = MODELS_PATH / model_name / "config.txt"
         with open(config_path, mode='r') as file:
-            content = [line for line in file]
+            content = [line.strip() for line in file]
 
             models.append({
                 "model_name": model_name,

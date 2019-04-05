@@ -26,6 +26,10 @@ PREDICTION_MODEL = api.model("Classification Result", {
     "confidence": fields.Float(required=True, description="The classification score")
 })
 
+VERSION_MODEL = api.model("API Version", {
+    "version": fields.String(required=True, description="The API version")
+})
+
 
 @api.route('/models')
 class Models(Resource):
@@ -42,10 +46,20 @@ class Models(Resource):
         return models
 
 
+@api.route('/version')
+class Version(Resource):
+    @api.marshal_with(VERSION_MODEL)
+    def get(self):
+        """ Returns the API version"""
+        return {"version": api.version}
+
+
 # Below is a parser for parsing the arguments that the /predict route requires in HTTP requests
 prediction_parser = reqparse.RequestParser()
-prediction_parser.add_argument('image', type=werkzeug.datastructures.FileStorage,
-                               location='files', required=True, help="The image to perform inference on")
+prediction_parser.add_argument('image', type=werkzeug.datastructures.FileStorage, location='files',
+                                required=True, help="The image to perform inference on")
+prediction_parser.add_argument('model_name', type=str, required=True,
+                                help="The name of the model to be used for predictino")
 
 
 @api.route('/predict')
@@ -57,8 +71,9 @@ class Predict(Resource):
 
         args = prediction_parser.parse_args(strict=True)
         image = args['image']
+        model_name = args['model_name']
 
-        prediction = model_utils.predict(image)
+        prediction = model_utils.predict(image, model_name)
 
         return prediction
 

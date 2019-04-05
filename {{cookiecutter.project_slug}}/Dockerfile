@@ -2,19 +2,17 @@
 
 FROM ubuntu:18.04
 
-# install dependencies.
+# Install python dependencies
 RUN apt-get update && apt-get install -y \
   python3 \
   python3-pip \
-  pkg-config \
-  git-core \
   wget \
+  pkg-config \
   && python3 -m pip install pip==19.0.3 \
-  && pip3 install numpy \
   Pillow \
+  werkzeug==0.14.1 \
   flask \
   flask_restplus
 
-
-WORKDIR /src/
-CMD ["python3", "api.py"]
+WORKDIR /"{{cookiecutter.project_slug}}"/
+CMD ["python3", "src/api.py"]

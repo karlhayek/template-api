@@ -1,6 +1,6 @@
 # {{cookiecutter.project_name}}
 
-{{cookiecutter.project_short_description}}
+{{cookiecutter.project_short_description}}.
 
 The following provides a walkthrough on how to build a Docker image containing the API, then run it in a container.
 
@@ -17,10 +17,10 @@ $ docker build -f Dockerfile -t <tag_name> .
 To run the built image in a container:
 
 ```sh
-$ docker run -p <port_of_your_choice>:5000 -v <absolute_path_to_api_dir>/src/:/src/ <tag_name>
+$ docker run -p <port_of_your_choice>:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
 ```
 
-The API file will be run automatically, and the service will listen to http requests to the chosen port. To prevent this, remove "CMD ["python3", "api.py"]" from the Dockerfile.
+The API file will be run automatically, and the service will listen to http requests to the chosen port. To prevent this, remove "CMD ["python3", "src/api.py"]" from the Dockerfile.
 
 ## OpenAPI
 
