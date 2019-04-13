@@ -1,6 +1,6 @@
-# Flask API Template
+# API Template
 
-Flask starter project for API's using [Cookiecutter](https://github.com/audreyr/cookiecutter).
+[FastApi](https://fastapi.tiangolo.com) template project for API's using [Cookiecutter](https://github.com/audreyr/cookiecutter).
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ Install Cookiecutter globally:
 $ pip install cookiecutter
 ```
 
-Generate the boilerplate:
+Generate the project boilerplate:
 
 ```sh
 $ cookiecutter https://github.com/karlhayek/template-api.git

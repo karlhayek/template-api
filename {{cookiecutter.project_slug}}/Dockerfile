@@ -10,9 +10,8 @@ RUN apt-get update && apt-get install -y \
   pkg-config \
   && python3 -m pip install pip==19.0.3 \
   Pillow \
-  werkzeug==0.14.1 \
-  flask \
-  flask_restplus
+  pytest \
+  fastapi[all]
 
-WORKDIR /"{{cookiecutter.project_slug}}"/
-CMD ["python3", "src/api.py"]
+WORKDIR /"{{cookiecutter.project_slug}}/src"/
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "5000"]
