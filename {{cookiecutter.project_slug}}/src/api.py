@@ -22,7 +22,7 @@ TFL_MODEL = api.model("TFLite Model", {
 })
 
 PREDICTION_MODEL = api.model("Classification Result", {
-    "class": fields.String(required=True, description="The predicted class"),
+    "class_name": fields.String(required=True, description="The predicted class"),
     "confidence": fields.Float(required=True, description="The classification score")
 })
 
@@ -57,9 +57,9 @@ class Version(Resource):
 # Below is a parser for parsing the arguments that the /predict route requires in HTTP requests
 prediction_parser = reqparse.RequestParser()
 prediction_parser.add_argument('image', type=werkzeug.datastructures.FileStorage, location='files',
-                                required=True, help="The image to perform inference on")
+                               required=True, help="The image to perform inference on")
 prediction_parser.add_argument('model_name', type=str, required=True,
-                                help="The name of the model to be used for predictino")
+                               help="The name of the model to be used for predictino")
 
 
 @api.route('/predict')
