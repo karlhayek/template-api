@@ -17,13 +17,15 @@ $ docker build -f Dockerfile -t <tag_name> .
 To run the built image in a container:
 
 ```sh
-$ docker run -p <port_of_your_choice>:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
+$ docker run -p 1111:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
 ```
 
-The API file will be run automatically, and the service will listen to http requests to the chosen port. To prevent this, the last commandfrom the Dockerfile, which runs the server.
+The API file will be run automatically, and the service will listen to http requests on port 1111.
 
 ## OpenAPI
 
-To view the service's possible routes and their documentation using the OpenAPI standard, open <host_ip>:<chosen_port>/docs after running the docker image.
+To view the service's possible routes and their documentation using the OpenAPI standard, open `localhost:1111/docs` after running the docker image.
 
 ## Testing
+
+Unit tests can be written in `src/test_api.py` and ran using `$ pytest src/`
