@@ -1,6 +1,6 @@
 # API Template
 
-[FastApi](https://fastapi.tiangolo.com) template project for API's using [Cookiecutter](https://github.com/audreyr/cookiecutter).
+[FastAPI](https://fastapi.tiangolo.com) template project for API's using [Cookiecutter](https://github.com/audreyr/cookiecutter).
 
 ## Quick Start
 

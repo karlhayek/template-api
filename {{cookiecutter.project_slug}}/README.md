@@ -2,8 +2,6 @@
 
 {{cookiecutter.project_short_description}}.
 
-The following provides a walkthrough on how to build a Docker image containing the API, then run it in a container.
-
 ## Build The Docker Image
 
 To build the docker image:
@@ -17,15 +15,15 @@ $ docker build -f Dockerfile -t <tag_name> .
 To run the built image in a container:
 
 ```sh
-$ docker run -p 1111:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
+$ docker run -p <port_of_your_choice>:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
 ```
 
-The API file will be run automatically, and the service will listen to http requests on port 1111.
+The API file will be run automatically, and the service will listen to http requests to the chosen port.
 
 ## OpenAPI
 
-To view the service's possible routes and their documentation using the OpenAPI standard, open `localhost:1111/docs` after running the docker image.
+To view the service's possible routes and their documentation using the OpenAPI standard, open `<host_ip>:<port_of_your_choice>/docs` after running the docker image.
 
 ## Testing
 
-Unit tests can be written in `src/test_api.py` and ran using `$ pytest src/`
+Unit tests can be written in `src/test_api.py` and ran using `$ pytest src/`.
