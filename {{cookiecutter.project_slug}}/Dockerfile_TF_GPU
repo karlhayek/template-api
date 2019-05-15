@@ -1,6 +1,8 @@
 # Template Dockerfile for using Tensorflow with the GPU. Install more dependencies and run more commands as needed
+#   Note: When running the Docker container, nvidia-docker has to be installed on your computer, and use the argument --runtime=nvidia in the docker run command, e.g.:
+#   $ docker run --runtime=nvidia --rm  -p <port_of_your_choice>:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
+
 FROM nvidia/cuda:10.0-runtime-ubuntu18.04
-LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
 
 # The commands below install Cuda and libcudnn in order for the code to run on the GPU
 ENV CUDNN_VERSION 7.5.0.56
@@ -28,12 +30,12 @@ RUN apt-get update && apt-get install -y \
   numpy \
   # To use GPU:
   tensorflow-gpu
-  # To use CPU instead :
+  # To use CPU instead:
   # tensorflow
 
 
 
-# Set the locale (required for uvicorn)
+# Set the locale (required for uvicorn, a dependency of fastapi)
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
   dpkg-reconfigure --frontend=noninteractive locales && \
   update-locale LANG=en_US.UTF-8
