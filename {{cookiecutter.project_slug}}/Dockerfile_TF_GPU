@@ -1,27 +1,18 @@
 # Template Dockerfile for using Tensorflow with the GPU. Install more dependencies and run more commands as needed
 #   Note: When running the Docker container, nvidia-docker has to be installed on your computer, and use the argument --runtime=nvidia in the docker run command, e.g.:
-#   $ docker run --runtime=nvidia --rm  -p <port_of_your_choice>:5000 --mount src="$(pwd)",target=/{{cookiecutter.project_slug}},type=bind <tag_name>
+#   $ docker run --runtime=nvidia --rm -p <port_of_your_choice>:5000 <tag_name>
 
-FROM nvidia/cuda:10.0-runtime-ubuntu18.04
+FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
 
-# The commands below install Cuda and libcudnn in order for the code to run on the GPU
-ENV CUDNN_VERSION 7.5.0.56
-LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  libcudnn7=$CUDNN_VERSION-1+cuda10.0 && \
-  apt-mark hold libcudnn7 && \
-  rm -rf /var/lib/apt/lists/*
-
-
-# Install python dependencies
-RUN apt-get update && apt-get install -y \
+# Install OS packages
+RUN apt-get update --no-install-recommends && apt-get install -y \
   locales \
   python3 \
   python3-pip \
-  wget \
-  pkg-config \
-  && python3 -m pip install pip==19.0.3 \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages
+RUN python3 -m pip install \
   Pillow \
   pytest \
   # fastapi dependencies
@@ -33,14 +24,15 @@ RUN apt-get update && apt-get install -y \
   # To use CPU instead:
   # tensorflow
 
-
-
-# Set the locale (required for uvicorn, a dependency of fastapi)
+# Set the locale (required for click, a dependency of FastAPI, on ubuntu 18)
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
   dpkg-reconfigure --frontend=noninteractive locales && \
   update-locale LANG=en_US.UTF-8
 ENV LANG en_US.UTF-8 
 
+# Copy the app code into the image
+ADD ./app $HOME/app
 
-WORKDIR /tensorflow_object_segmentation/src
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "5000"]
+# Run the app
+WORKDIR /app
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]

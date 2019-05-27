@@ -1,8 +1,9 @@
-src/__pycache__
-src/.cache
-src/*.pyc
+app/__pycache__
+app/.cache
+app/*.pyc
 .pytest_cache
 
 .vscode
-.idea
+.idea 
 .DS_Store
+*/.DS_Store

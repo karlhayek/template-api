@@ -5,7 +5,7 @@ from pathlib import Path
 from io import BytesIO
 from PIL import Image
 
-MODELS_PATH = Path.cwd().parent / "models"
+MODELS_PATH = Path.cwd() / "models"
 
 
 def get_models_info():
