@@ -9,14 +9,14 @@ To build the docker image:
 ```sh
 $ docker build -t <tag_name> .
 ```
-The Dockerfile installs the projet's dependencies and copies the code in `app/` to `/app` in the image. Customize as needed.
+The Dockerfile installs the project's dependencies.
 
 ## Run the Docker container
 
-To run the built image in a container:
+To run the built image in a container, mounting the local `app/` directory to the container in `/app/`:
 
 ```sh
-$ docker run -p <port_of_your_choice>:5000 <tag_name>
+$ docker run -p <port_of_your_choice>:5000 -v $(pwd)/app:/app <tag_name>
 ```
 
 The API file will be run automatically, and the service will listen to HTTP requests to the chosen port.
